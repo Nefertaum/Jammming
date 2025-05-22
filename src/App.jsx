@@ -13,6 +13,7 @@ import RemoveSong from './RemoveSong'
 function App() {
 const [search, setSearch] = useState("");
 function handleChangeSearch(e){
+  console.log(e.target.value);
 setSearch(e.target.value);
 };
 const [playlistName, setPlaylistName] = useState("");
@@ -64,7 +65,7 @@ const [editing, setEditing] = useState(false);
         <p><Search value={search}/></p>
         </div>
       <div>
-      <p><SearchResults search={search} data={Tracklist} onAdd={addSongToPlaylist}/></p>
+      {search ? <SearchResults search={search} data={Tracklist} addSongToPlaylist={addSongToPlaylist}/> : null}
       </div>
       <div>
         <label htmlFor="playlistName">Name your Playlist: </label>

@@ -1,17 +1,22 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Search from "./Search";
-import  Tracklist  from "./Tracklist";
+import Tracklist from "./Tracklist";
 import Playlist from "./Playlist";
 
-const SearchResults = ({search, data, onAdd}) => {
-const match = data.find(({ name }) => name === search);
- return (
-    <div>
-        {match? `Find: ${match.name} by Artist: ${match.artist} from Album: ${match.album}` : `No match found` }
-         <button onClick={() => match? onAdd(match) : "I'm Affraid I can't do that."}>Add</button>
-    </div>
-   
- )
+const SearchResults = ({ search, data, addSongToPlaylist }) => {
+  const match = data.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
+  return (
+    <>
+      {match
+        ? match.map((matchItem, index) => (
+            <div key={index}>
+              {`Find: ${matchItem.name} by Artist: ${matchItem.artist} from Album: ${matchItem.album}`}
+              <button onClick={() => addSongToPlaylist(matchItem)}>Add</button>
+            </div>
+          ))
+        : `No match found`}
+    </>
+  );
 };
 
-export default SearchResults;   
+export default SearchResults;
