@@ -9,6 +9,7 @@ import Playlist from "./Playlist"
 import Track from './Track'
 import RemoveSong from './RemoveSong'
 
+
 function App() {
 const [search, setSearch] = useState("");
 function handleChangeSearch(e){
@@ -19,9 +20,6 @@ function handleChangePlaylistName (e) {
   setPlaylistName(e.target.value);
 };   
 const [playlist, setPlaylist] = useState([{name: "Goldie", artist: "Doly Parton"}, {name:"Stein"}]);
-function addSong(newSong) {
-        setPlaylist(prev => [newSong, ...prev]);
-    };
 
  const [createPlaylist, setCreatePlaylist] = useState({
   name:"",
@@ -42,13 +40,22 @@ function addSongToPlaylist(newSong) {
         }));
     };
 
+function changeTextHeading(newHeading) {
+    setCreatePlaylist(prev =>({
+      ...prev,
+      name: newHeading
+    }));
+}
+
 function removeSong(indexToRemove){
   setCreatePlaylist(prev => ({
     ...prev,
     playlist: prev.playlist.filter((_,index) => index !== indexToRemove)
   }));
-}
-  
+};
+
+const [editing, setEditing] = useState(false);
+   
   return (
     <>
       <div>
@@ -63,21 +70,30 @@ function removeSong(indexToRemove){
         <label htmlFor="playlistName">Name your Playlist: </label>
         <input id="playlistName" type="text" onChange={handleChangePlaylistName} value={playlistName} />
         <Playlist playlistName={playlistName} playlist={playlist} onCreate={addPlaylist} />
-        {/* <button onClick={() => addPlaylist(playlistName, playlist )}>Create</button> */}
-         <p>{createPlaylist.name}</p>
+        <div>{editing? (<>
+        <input 
+          value={createPlaylist.name} 
+          onChange={(e) => 
+            changeTextHeading(e.target.value)
+          }
+          />
+          <button 
+          onClick={() => setEditing(false)}
+          >
+            SAVE
+            </button> 
+            </>
+          ) : (
+          <>
+          <span>{createPlaylist.name}</span>
+          <button onClick={() => 
+            setEditing(true)}> 
+            EDIT
+            </button>
+            </> 
+          )}
+          </div>
            <RemoveSong createPlaylist={createPlaylist} onRemove={removeSong} />
-       {createPlaylist.playlist.map((element, index) => (
-        <div>
-        <p key={index}>{element.name}</p>
-        <button onClick={removeSong}>X</button>
-        </div>))
-        }
-      
-        {/* <Playlist value={createPlaylist} /> */}
-        <p>{playlistName}</p>
-        {/* <Track track={playlist} /> */}
-       
-        
       </div>
       
     </>
