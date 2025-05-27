@@ -1,14 +1,15 @@
 import React from "react";
 
-function RemoveSong({ currentPlaylist, onRemove }) {
+function RemoveSong({ currentPlaylist, removeSong, saveUserPlaylist }) {
   return (
     <div>
       {currentPlaylist.playlist.map((song, index) => (
         <div key={index}>
           <p>{song.name}</p>
-          <button onClick={() => onRemove(index)}>X</button>
+          <button onClick={() => removeSong(index)}>X</button>
         </div>
       ))}
+      <button onClick={() => saveUserPlaylist(currentPlaylist)}>Save</button>
     </div>
   );
 }

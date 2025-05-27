@@ -13,42 +13,52 @@ import PlaylistSelector from "./PlaylistSelector";
 function App() {
   const [search, setSearch] = useState("");
   function handleChangeSearch(e) {
-    console.log(e.target.value);
     setSearch(e.target.value);
   }
   const [playlistName, setPlaylistName] = useState("");
   function handleChangePlaylistName(e) {
     setPlaylistName(e.target.value);
   }
-  const [playlist, setPlaylist] = useState([
-    { name: "Goldie", artist: "Doly Parton" },
-    { name: "Stein" },
-  ]);
+  const [playlist, setPlaylist] = useState([]);
 
   const [createPlaylist, setCreatePlaylist] = useState({
     name: "",
     playlist: [],
+    uri: [],
   });
 
   const [userPlaylists, setUserPlaylists] = useState([]);
 
   const [currentPlaylist, setCurrentPlaylist] = useState(createPlaylist);
 
-  function addPlaylist(newName, playlistArray) {
+  function addPlaylist(newName, playlistArray, uriArray) {
     setUserPlaylists((prev) => [
       ...prev,
       {
         id: userPlaylists.length + 1,
         name: newName,
         playlist: playlistArray,
+        uri: uriArray,
       },
     ]);
+  }
+
+  function saveUserPlaylist(currentPlaylist) {
+    setUserPlaylists((prev) => {
+      const index = currentPlaylist.id - 1;
+      return [
+        ...prev.slice(0, index),
+        currentPlaylist,
+        ...prev.slice(index + 1),
+      ];
+    });
   }
 
   function addSongToPlaylist(newSong) {
     setCurrentPlaylist((prev) => ({
       ...prev,
       playlist: [newSong, ...prev.playlist],
+      uri: [newSong.uri, ...prev.uri],
     }));
   }
 
@@ -63,6 +73,7 @@ function App() {
     setCurrentPlaylist((prev) => ({
       ...prev,
       playlist: prev.playlist.filter((_, index) => index !== indexToRemove),
+      uri: prev.uri.filter((_, index) => index !== indexToRemove),
     }));
   }
 
@@ -124,10 +135,14 @@ function App() {
           </>
         )}
 
-        <RemoveSong currentPlaylist={currentPlaylist} onRemove={removeSong} />
+        <RemoveSong
+          currentPlaylist={currentPlaylist}
+          removeSong={removeSong}
+          saveUserPlaylist={saveUserPlaylist}
+        />
       </div>
-      <h1>{createPlaylist.id}</h1>
-      <pre>{JSON.stringify(currentPlaylist, null, 2)}</pre>
+      <h1>{currentPlaylist.id}</h1>
+      <pre>{JSON.stringify(currentPlaylist, null, 3)}</pre>
       <PlaylistSelector
         userPlaylists={userPlaylists}
         currentPlaylist={currentPlaylist}
