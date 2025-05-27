@@ -12,24 +12,25 @@ import PlaylistSelector from "./PlaylistSelector";
 
 function App() {
   const [search, setSearch] = useState("");
-  function handleChangeSearch(e) {
-    setSearch(e.target.value);
-  }
   const [playlistName, setPlaylistName] = useState("");
-  function handleChangePlaylistName(e) {
-    setPlaylistName(e.target.value);
-  }
   const [playlist, setPlaylist] = useState([]);
-
+  const [uri, setUri] = useState([]);
   const [createPlaylist, setCreatePlaylist] = useState({
     name: "",
     playlist: [],
     uri: [],
   });
-
+  const [editing, setEditing] = useState(false);
   const [userPlaylists, setUserPlaylists] = useState([]);
-
   const [currentPlaylist, setCurrentPlaylist] = useState(createPlaylist);
+
+  function handleChangeSearch(e) {
+    setSearch(e.target.value);
+  }
+
+  function handleChangePlaylistName(e) {
+    setPlaylistName(e.target.value);
+  }
 
   function addPlaylist(newName, playlistArray, uriArray) {
     setUserPlaylists((prev) => [
@@ -77,77 +78,78 @@ function App() {
     }));
   }
 
-  const [editing, setEditing] = useState(false);
-
   return (
     <>
-      <div>
-        <label htmlFor="Search">Search Song: </label>
-        <input
-          id="Search"
-          type="search"
-          name="Search"
-          onChange={handleChangeSearch}
-          value={search}
-        />
-        <p>
-          <Search value={search} />
-        </p>
-      </div>
-      <div>
-        {search ? (
-          <SearchResults
-            search={search}
-            data={Tracklist}
-            addSongToPlaylist={addSongToPlaylist}
+      <div className="body">
+        <div className="search">
+          <label htmlFor="Search">Search Song: </label>
+          <input
+            id="Search"
+            type="search"
+            name="Search"
+            onChange={handleChangeSearch}
+            value={search}
           />
-        ) : null}
-      </div>
-      <div>
-        <label htmlFor="playlistName">Name your Playlist: </label>
-        <input
-          id="playlistName"
-          type="text"
-          onChange={handleChangePlaylistName}
-          value={playlistName}
-        />
-        <Playlist
-          playlistName={playlistName}
-          playlist={playlist}
-          onCreate={addPlaylist}
-        />
-        {currentPlaylist && (
-          <>
-            {editing ? (
-              <div>
-                <input
-                  value={currentPlaylist.name}
-                  onChange={(e) => changeTextHeading(e.target.value)}
-                />
-                <button onClick={() => setEditing(false)}>SAVE</button>
-              </div>
-            ) : (
-              <div>
-                <span>{currentPlaylist.name}</span>
-                <button onClick={() => setEditing(true)}>EDIT</button>
-              </div>
-            )}
-          </>
-        )}
+          <p>
+            <Search value={search} />
+          </p>
+        </div>
+        <div>
+          {search ? (
+            <SearchResults
+              search={search}
+              data={Tracklist}
+              addSongToPlaylist={addSongToPlaylist}
+            />
+          ) : null}
+        </div>
+        <div>
+          <label htmlFor="playlistName">Name your Playlist: </label>
+          <input
+            id="playlistName"
+            type="text"
+            onChange={handleChangePlaylistName}
+            value={playlistName}
+          />
+          <Playlist
+            playlistName={playlistName}
+            playlist={playlist}
+            uri={uri}
+            onCreate={addPlaylist}
+          />
+          {currentPlaylist && (
+            <>
+              {editing ? (
+                <div>
+                  <input
+                    value={currentPlaylist.name}
+                    onChange={(e) => changeTextHeading(e.target.value)}
+                  />
+                  <button onClick={() => setEditing(false)}>SAVE</button>
+                </div>
+              ) : (
+                <div>
+                  <span>{currentPlaylist.name}</span>
+                  <button onClick={() => setEditing(true)}>EDIT</button>
+                </div>
+              )}
+            </>
+          )}
 
-        <RemoveSong
+          <RemoveSong
+            currentPlaylist={currentPlaylist}
+            removeSong={removeSong}
+            saveUserPlaylist={saveUserPlaylist}
+          />
+        </div>
+        <h1>{currentPlaylist.id}</h1>
+        <pre>{JSON.stringify(currentPlaylist, null, 3)}</pre>
+        <PlaylistSelector
+          userPlaylists={userPlaylists}
           currentPlaylist={currentPlaylist}
-          removeSong={removeSong}
-          saveUserPlaylist={saveUserPlaylist}
+          setCurrentPlaylist={setCurrentPlaylist}
         />
       </div>
-      <h1>{currentPlaylist.id}</h1>
-      <pre>{JSON.stringify(currentPlaylist, null, 3)}</pre>
-      <PlaylistSelector
-        userPlaylists={userPlaylists}
-        currentPlaylist={currentPlaylist}
-        setCurrentPlaylist={setCurrentPlaylist}
-      />
     </>
   );
 }

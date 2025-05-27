@@ -4,12 +4,19 @@ import Tracklist from "./Tracklist";
 import Playlist from "./Playlist";
 
 const SearchResults = ({ search, data, addSongToPlaylist }) => {
-  const match = data.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
+  const style = {
+    border: "solid 1px black",
+    fontSize: "2rem",
+  };
+
+  const match = data.filter(({ name }) =>
+    name.toLowerCase().includes(search.toLowerCase())
+  );
   return (
     <>
       {match
         ? match.map((matchItem, index) => (
-            <div key={index}>
+            <div key={index} style={style}>
               {`Find: ${matchItem.name} by Artist: ${matchItem.artist} from Album: ${matchItem.album}`}
               <button onClick={() => addSongToPlaylist(matchItem)}>Add</button>
             </div>

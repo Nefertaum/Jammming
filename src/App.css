@@ -40,3 +40,17 @@
 .read-the-docs {
   color: #888;
 }
+
+.search {
+  background-color: #1ed760;
+  margin: 3.5rem;
+}
+
+.body {
+  background-color: #1ed760;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  border: solid 1px black;
+}
