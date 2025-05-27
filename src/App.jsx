@@ -81,27 +81,29 @@ function App() {
   return (
     <>
       <div className="body">
-        <div className="search">
-          <label htmlFor="Search">Search Song: </label>
-          <input
-            id="Search"
-            type="search"
-            name="Search"
-            onChange={handleChangeSearch}
-            value={search}
-          />
-          <p>
-            <Search value={search} />
-          </p>
-        </div>
-        <div>
-          {search ? (
-            <SearchResults
-              search={search}
-              data={Tracklist}
-              addSongToPlaylist={addSongToPlaylist}
+        <div className="searchResults">
+          <div className="search">
+            <label htmlFor="Search">Search Song: </label>
+            <input
+              id="Search"
+              type="search"
+              name="Search"
+              onChange={handleChangeSearch}
+              value={search}
             />
-          ) : null}
+            <p>
+              <Search value={search} />
+            </p>
+          </div>
+          <div>
+            {search ? (
+              <SearchResults
+                search={search}
+                data={Tracklist}
+                addSongToPlaylist={addSongToPlaylist}
+              />
+            ) : null}
+          </div>
         </div>
         <div>
           <label htmlFor="playlistName">Name your Playlist: </label>
@@ -143,7 +145,7 @@ function App() {
           />
         </div>
         <h1>{currentPlaylist.id}</h1>
-        <pre>{JSON.stringify(currentPlaylist, null, 3)}</pre>
+        {/*  <pre>{JSON.stringify(currentPlaylist, null, 3)}</pre> */}
         <PlaylistSelector
           userPlaylists={userPlaylists}
           currentPlaylist={currentPlaylist}

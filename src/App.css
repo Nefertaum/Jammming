@@ -54,3 +54,8 @@
   align-content: flex-start;
   border: solid 1px black;
 }
+
+.searchResults {
+  width: 50%;
+  margin: 5px;
+}

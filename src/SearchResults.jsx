@@ -6,7 +6,11 @@ import Playlist from "./Playlist";
 const SearchResults = ({ search, data, addSongToPlaylist }) => {
   const style = {
     border: "solid 1px black",
-    fontSize: "2rem",
+    fontSize: "1.1rem",
+    color: "#FFF",
+    backgroundColor: "#121212",
+    margin: "3px",
+    padding: "10px",
   };
 
   const match = data.filter(({ name }) =>
@@ -18,7 +22,7 @@ const SearchResults = ({ search, data, addSongToPlaylist }) => {
         ? match.map((matchItem, index) => (
             <div key={index} style={style}>
               {`Find: ${matchItem.name} by Artist: ${matchItem.artist} from Album: ${matchItem.album}`}
-              <button onClick={() => addSongToPlaylist(matchItem)}>Add</button>
+              <button onClick={() => addSongToPlaylist(matchItem)}>+</button>
             </div>
           ))
         : `No match found`}
