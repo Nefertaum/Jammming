@@ -20,7 +20,13 @@ function RemoveSong({ currentPlaylist, removeSong, saveUserPlaylist }) {
           <button onClick={() => removeSong(index)}>X</button>
         </div>
       ))}
-      <button onClick={() => saveUserPlaylist(currentPlaylist)}>Save</button>
+      <button
+        onClick={() =>
+          currentPlaylist.id ? saveUserPlaylist(currentPlaylist) : ""
+        }
+      >
+        Save
+      </button>
     </div>
   );
 }

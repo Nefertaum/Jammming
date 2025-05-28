@@ -3,7 +3,12 @@ import Search from "./Search";
 import Tracklist from "./Tracklist";
 import Playlist from "./Playlist";
 
-const SearchResults = ({ search, data, addSongToPlaylist }) => {
+const SearchResults = ({
+  search,
+  data,
+  addSongToPlaylist,
+  currentPlaylist,
+}) => {
   const style = {
     border: "solid 1px black",
     fontSize: "1.1rem",
@@ -23,7 +28,13 @@ const SearchResults = ({ search, data, addSongToPlaylist }) => {
         ? match.map((matchItem, index) => (
             <div key={index} style={style}>
               {`Find: ${matchItem.name} by Artist: ${matchItem.artist} from Album: ${matchItem.album}`}
-              <button onClick={() => addSongToPlaylist(matchItem)}>+</button>
+              <button
+                onClick={() =>
+                  currentPlaylist.id ? addSongToPlaylist(matchItem) : ""
+                }
+              >
+                +
+              </button>
             </div>
           ))
         : `No match found`}

@@ -100,11 +100,8 @@ function App() {
               <SearchResults
                 search={search}
                 data={Tracklist}
-                addSongToPlaylist={() =>
-                  currentPlaylist
-                    ? { addSongToPlaylist }
-                    : "I'm affraid I can't do that"
-                }
+                addSongToPlaylist={addSongToPlaylist}
+                currentPlaylist={currentPlaylist}
               />
             ) : null}
           </div>
@@ -145,9 +142,7 @@ function App() {
           <RemoveSong
             currentPlaylist={currentPlaylist}
             removeSong={removeSong}
-            saveUserPlaylist={() =>
-              currentPlaylist ? { saveUserPlaylist } : "It is not possible"
-            }
+            saveUserPlaylist={saveUserPlaylist}
           />
         </div>
         <h1>{currentPlaylist.id}</h1>
