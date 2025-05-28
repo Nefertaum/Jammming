@@ -11,6 +11,7 @@ const SearchResults = ({ search, data, addSongToPlaylist }) => {
     backgroundColor: "#121212",
     margin: "3px",
     padding: "10px",
+    borderRadius: "8px",
   };
 
   const match = data.filter(({ name }) =>

@@ -14,9 +14,9 @@ function RemoveSong({ currentPlaylist, removeSong, saveUserPlaylist }) {
     <div>
       {currentPlaylist.playlist.map((song, index) => (
         <div key={index} style={style}>
-          <p>{song.name}</p>
-          <p>{song.artist}</p>
-          <p>{song.album}</p>
+          <p>Track: {song.name}</p>
+          <p>Artist: {song.artist}</p>
+          <p>Album: {song.album}</p>
           <button onClick={() => removeSong(index)}>X</button>
         </div>
       ))}
