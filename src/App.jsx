@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -9,6 +9,7 @@ import Playlist from "./Playlist";
 import Track from "./Track";
 import RemoveSong from "./RemoveSong";
 import PlaylistSelector from "./PlaylistSelector";
+import { getAccessToken } from "./Fetch";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -23,6 +24,10 @@ function App() {
   const [editing, setEditing] = useState(false);
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [currentPlaylist, setCurrentPlaylist] = useState(createPlaylist);
+
+  useEffect(() => {
+    getAccessToken();
+  }, []);
 
   function handleChangeSearch(e) {
     setSearch(e.target.value);
@@ -91,9 +96,6 @@ function App() {
               onChange={handleChangeSearch}
               value={search}
             />
-            <p>
-              <Search value={search} />
-            </p>
           </div>
           <div>
             {search ? (
